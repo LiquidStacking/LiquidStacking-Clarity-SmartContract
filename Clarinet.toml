@@ -5,12 +5,11 @@ authors = []
 telemetry = false
 cache_dir = './.cache'
 requirements = []
-[contracts.StackingPool]
-path = 'contracts/StackingPool.clar'
+[contracts.StackedSTX]
+path = 'contracts/StackedSTX.clar'
 clarity_version = 1
 epoch = 2.0
-[repl.analysis]
-passes = ['check_checker']
+
 
 [repl.analysis.check_checker]
 strict = false

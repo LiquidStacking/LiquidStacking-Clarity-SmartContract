@@ -1,17 +1,26 @@
 
-;; title: StackingPool
-;; version:
+;; title: StackedSTX
+;; version: 
 ;; summary:
 ;; description:
+;; This contract accepts STX and returns stSTX in return
+;; current contract is a MockStackingPool contract which was influenced by EIP4626
+;; https://eips.ethereum.org/EIPS/eip-4626
+
+
 
 ;; traits
 ;;
+;; (impl-trait .trait-sip-010.sip-010-trait)
+
 
 ;; errors
 (define-constant ERR-NOT-AUTHORIZED (err u1000))
 
 ;; token definitions
 ;; 
+(define-fungible-token mock-stacked-stx)
+
 
 ;; constants
 ;;
@@ -24,6 +33,8 @@
 
 ;; data maps
 ;;
+(define-map approved-contracts principal bool)
+
 
 ;; public functions
 ;;
@@ -35,7 +46,7 @@
 (define-public (changeRatio (newRatio uint))
   (begin
     (asserts! (is-eq tx-sender (var-get contract-owner)) ERR-NOT-AUTHORIZED)
-    (var-set ratio newRatio)
+    (ok (var-set ratio newRatio))
   )
 )
 
