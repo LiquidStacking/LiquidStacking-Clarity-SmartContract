@@ -31,6 +31,7 @@
 (define-data-var token-uri (string-utf8 256) u"https://liquidstacking.xyz/")
 (define-data-var contract-owner principal tx-sender) ;; msg.sender as contract-owner
 (define-data-var ratio uint u870000) ;; 0.87 mil ratio
+(define-data-var mil uint u1000000) ;; 
 
 
 ;; data maps
@@ -51,21 +52,26 @@
 
 
 (define-public (stack (amount uint)) 
-    (stx-transfer? amount tx-sender (as-contract tx-sender))  ;; transfer stacks to address(this)
-    (mint (/ (* amount (var-get ratio)) 1000000) tx-sender) ;; mint stSTX to tx-sender as much as amount * ratio / mil
+    (begin
+        (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))  ;; transfer stacks to address(this)
+        (mint (/ (* amount (var-get ratio)) u1000000) tx-sender) ;; mint stSTX to tx-sender as much as amount * ratio / mil
+   )
 ) 
-                                                
-    ;; (define-private (mint (amount uint) (recipient principal))
 
+(define-public (unstack (amount uint)) 
+    (begin
+        (try! (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))  ;; transfer stSTX to address(this)
+        (stx-transfer? (/ (* amount u1000000) (var-get ratio)) (as-contract tx-sender) tx-sender )  ;; returns STX to msg.sender
+   )
+)
 
+                                            
 (define-public (changeRatio (newRatio uint))
   (begin
     (asserts! (is-eq tx-sender (var-get contract-owner)) ERR-NOT-AUTHORIZED)
     (ok (var-set ratio newRatio))
   )
 )
-
-
 
 
 ;; read only functions
