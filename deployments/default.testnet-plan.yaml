@@ -1,0 +1,26 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://stacks-node-api.testnet.stacks.co"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - requirement-publish:
+            contract-id: SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard
+            remap-sender: ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4
+            remap-principals:
+              SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE: ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4
+            cost: 8400
+            path: "./.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
+            clarity-version: 1
+        - contract-publish:
+            contract-name: StackedSTX
+            expected-sender: ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4
+            cost: 27660
+            path: contracts/StackedSTX.clar
+            anchor-block-only: true
+            clarity-version: 1
+      epoch: "2.0"
