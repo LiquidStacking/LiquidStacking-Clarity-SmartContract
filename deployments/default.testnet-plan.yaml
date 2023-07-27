@@ -2,7 +2,7 @@
 id: 0
 name: Testnet deployment
 network: testnet
-stacks-node: "https://stacks-node-api.testnet.stacks.co"
+stacks-node: "http://stacks-node-api.testnet.stacks.co"
 bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
 plan:
   batches:
@@ -17,10 +17,10 @@ plan:
             path: "./.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
             clarity-version: 1
         - contract-publish:
-            contract-name: StackedSTX
+            contract-name: StackedSTX_2
             expected-sender: ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4
-            cost: 27660
-            path: contracts/StackedSTX.clar
+            cost: 7009811
+            path: contracts/StackedSTX_2.clar
             anchor-block-only: true
             clarity-version: 1
       epoch: "2.0"
