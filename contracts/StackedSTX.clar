@@ -59,10 +59,12 @@
 ) 
 
 (define-public (unstack (amount uint)) 
+    (let ((caller tx-sender))
     (begin
-        (try! (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))  ;; transfer stSTX to address(this)
-        (stx-transfer? (/ (* amount u1000000) (var-get ratio)) (as-contract tx-sender) tx-sender )  ;; returns STX to msg.sender
-   )
+        (try! (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))
+        (as-contract (stx-transfer? (/ (* amount (var-get mil)) (var-get ratio)) tx-sender caller))
+    )
+    )
 )
 
                                             
