@@ -10,6 +10,8 @@
 (define-constant ERR-NOT-AUTHORIZED (err u1000))
 (define-constant err-owner-only (err u1001))
 (define-constant err-not-token-owner (err u101))
+(define-constant ERR-INSUFFICIENT-stSTX (err u2000))
+(define-constant ERR-INSUFFICIENT-STX (err u2001))
 
 ;; token definitions
 (define-fungible-token mock-stacked-stx)
@@ -40,12 +42,54 @@
     )
 )
 
+
+;; testing simple stack w/o
+;; (define-public (stack (amount uint)) 
+;;     (begin
+;;         (stx-transfer? amount tx-sender (as-contract tx-sender))
+;;     )
+;; )
+
+;; stack(3 mil) -> stSTX(3 mil * 0.87 mil / mil) 2.61 stSTX
+;; contract has 3 STX, tx-sender 2.61 stSTX
+
+
+;; adding wrapping stx-transfer? to as-contract
 (define-public (unstack (amount uint)) 
+    (let ((caller tx-sender))
     (begin
         (try! (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))
-        (stx-transfer? (/ (* amount (var-get mil)) (var-get ratio)) (as-contract tx-sender) tx-sender )
+        (as-contract (stx-transfer? (/ (* amount (var-get mil)) (var-get ratio)) tx-sender caller))
+    )
     )
 )
+
+;; (define-public (unstack (amount uint)) 
+;;     (begin
+;;         (try! (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))
+;;         (stx-transfer? (/ (* amount (var-get mil)) (var-get ratio)) (as-contract tx-sender) tx-sender )
+;;     )
+;; )
+
+;; for debugging
+;; (define-public (unstack (amount uint)) 
+;;     (begin
+;;         (if (is-ok (ft-transfer? mock-stacked-stx amount tx-sender (as-contract tx-sender)))
+;;             (if (is-ok (stx-transfer? (/ (* amount (var-get mil)) (var-get ratio)) (tx-sender) tx-sender))
+;;                 (ok true)
+;;                 ERR-INSUFFICIENT-STX)
+;;             ERR-INSUFFICIENT-stSTX)
+;;     )
+;; )
+
+;; (define-public (unstack (amount uint)) 
+;;     (begin
+;;         (as-contract (stx-transfer? amount tx-sender .contract-caller))
+;;     )
+;; )
+
+;; unstack(2 mil stSTX) -> (2 mil * mil) / 0.87 mil  = 2.29885057471 million STX
+
 
 (define-public (changeRatio (newRatio uint))
   (begin
