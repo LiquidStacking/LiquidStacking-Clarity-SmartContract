@@ -7,8 +7,8 @@ cache_dir = './.cache'
 
 [[project.requirements]]
 contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
-[contracts.StackedSTX_2]
-path = 'contracts/StackedSTX_2.clar'
+[contracts.StackedSTX_3]
+path = 'contracts/StackedSTX_3.clar'
 clarity_version = 1
 epoch = 2.0
 [repl.analysis]

@@ -17,10 +17,10 @@ plan:
             path: "./.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar"
             clarity-version: 1
         - contract-publish:
-            contract-name: StackedSTX_2
+            contract-name: StackedSTX_3
             expected-sender: ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4
-            cost: 7009811
-            path: contracts/StackedSTX_2.clar
+            cost: 6973003
+            path: contracts/StackedSTX_3.clar
             anchor-block-only: true
             clarity-version: 1
       epoch: "2.0"
